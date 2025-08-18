@@ -1,9 +1,32 @@
 @use '@/styles/variables' as v;
 
 .app {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
+  display: flex;
   min-height: 100vh;
+  width: 100%;
+  transition: all 0.3s ease-out;
+
+  &-content {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    flex: 1;
+  }
+
+  &-list {
+    overflow: hidden;
+    transition: width .3s ease-out;
+    white-space: nowrap; 
+    width: 0;
+    
+    &--expanded {
+      width: 25vw;
+    }
+    
+    * {
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
 }
 
 .content {
@@ -18,7 +41,7 @@ hr {
   margin-bottom: 1rlh;
 }
 
-h1, h2 {
+h1, h2, h3 {
   font-weight: 400;
 }
 

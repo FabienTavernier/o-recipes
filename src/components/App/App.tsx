@@ -3,17 +3,22 @@ import './App.scss';
 import { isAxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router';
-import type { Alert, Recipe } from '@/@types';
+
 import FavoritesPage from '@/pages/FavoritesPage';
 import HomePage from '@/pages/HomePage';
 import NotFoundPage from '@/pages/NotFoundPage';
 import RecipePage from '@/pages/RecipePage';
-import * as api from '@/services/api';
-import * as ls from '@/services/localStorage';
-import Notification from '../ui/Notification/Notification';
-import Spinner from '../ui/Spinner/Spinner';
+
 import Header from './Header/Header';
 import SideBar from './Sidebar/Sidebar';
+
+import Notification from '../ui/Notification/Notification';
+import Spinner from '../ui/Spinner/Spinner';
+
+import * as api from '@/services/api';
+import * as ls from '@/services/localStorage';
+
+import type { Alert, Recipe } from '@/@types';
 
 export default function App() {
   const location = useLocation();
@@ -23,6 +28,8 @@ export default function App() {
   const [alert, setAlert] = useState<Alert | null>(null);
 
   const [isLogged, setIsLogged] = useState(false);
+
+  const [showList, setShowList] = useState(false);
 
   useEffect(() => {
     async function fetchRecipes() {
@@ -73,30 +80,36 @@ export default function App() {
       {alert && <Notification alert={alert} setAlert={setAlert} />}
 
       <div className="app">
-        <SideBar recipes={recipes} isLogged={isLogged} />
+        <div className="app-content">
+          <SideBar recipes={recipes} isLogged={isLogged} />
 
-        <div className="content">
-          <Header
-            isLogged={isLogged}
-            setIsLogged={setIsLogged}
-            setAlert={setAlert}
-          />
+          <div className="content">
+            <Header
+              isLogged={isLogged}
+              setIsLogged={setIsLogged}
+              setAlert={setAlert}
+            />
 
-          <hr />
+            <hr />
 
-          <Routes>
-            <Route path="/" element={<HomePage recipes={recipes} />} />
-            <Route path="/recipe/:slug" element={<RecipePage />} />
+            <Routes>
+              <Route path="/" element={<HomePage recipes={recipes} />} />
+              <Route path="/recipe/:slug" element={<RecipePage />} />
 
-            {isLogged && (
-              <Route
-                path="/favorites"
-                element={<FavoritesPage setAlert={setAlert} />}
-              />
-            )}
+              {isLogged && (
+                <Route
+                  path="/favorites"
+                  element={<FavoritesPage setAlert={setAlert} />}
+                />
+              )}
 
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </div>
+        </div>
+
+        <div className="app-list app-list--expanded">
+          <h3>MA FUTURE LISTE</h3>
         </div>
       </div>
     </>
