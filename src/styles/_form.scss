@@ -25,4 +25,33 @@ input {
     display: block;
     width: 100%;
   }
+  
+  &--dark {
+    background-color: v.$color;
+  }
+
+  &--tag {
+    position: relative;
+
+    &::after {
+      background: #a00;
+      border: 2px solid #fff;
+      border-radius: 4px;
+      bottom: -8px;
+      color: #fff;
+      content: attr(data-count);
+      font-size: 0.625rem;
+      line-height: 1;
+      padding: 4px;
+      position: absolute;
+      right: 0;
+      transform: translateX(50%);
+    }
+  }
+
+  &--ghost {
+    background: v.$color-border;
+    border: 0;
+    color: v.$color;
+  }
 }

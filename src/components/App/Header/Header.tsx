@@ -6,6 +6,8 @@ import type { Alert } from '@/@types';
 import * as api from '@/services/api';
 import * as ls from '@/services/localStorage';
 
+import CartIcon from '@/assets/icons/cart.svg?react';
+
 type HeaderProps = {
   isLogged: boolean;
   setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
@@ -64,21 +66,34 @@ export default function Header({
     <header className="header">
       <img src="/logo.png" alt="O'recipes" />
 
-      {isLogged && (
-        <button className="button" type="button" onClick={logout}>
-          Se déconnecter
-        </button>
-      )}
+      <div className="header-action">
 
-      {!isLogged && (
-        <form onSubmit={login}>
-          <input placeholder="Adresse e-mail" name="email" type="email" />
-          <input placeholder="Mot de passe" name="password" type="password" />
-          <button type="submit" className="button">
-            Se connecter
+        {isLogged && (
+          <button className="button" type="button" onClick={logout}>
+            Se déconnecter
           </button>
-        </form>
-      )}
+        )}
+
+        {!isLogged && (
+          <form onSubmit={login}>
+            <input placeholder="Adresse e-mail" name="email" type="email" />
+            <input placeholder="Mot de passe" name="password" type="password" />
+            <button type="submit" className="button">
+              OK
+            </button>
+          </form>
+        )}
+
+        <button
+        type="button"
+          className="button button--dark button--tag"
+          data-count={3}
+          aria-label={`Afficher la liste des ingrédients (${3} éléments)`}
+          onClick={() => console.log('CLICKED on cart')}
+        >
+          <CartIcon className="cart-icon" />
+        </button>
+      </div>
     </header>
   );
 }
