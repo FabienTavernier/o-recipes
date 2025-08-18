@@ -27,6 +27,9 @@ jobs:
   build:
     # Type du runner : la tâche s'exécute sur un Ubuntu
     runs-on: ubuntu-latest
+    env:
+      # On reseigne la variable d'environnement configurée dans `Settings > environment`
+      VITE_API_BASE_URL: ${{vars.VITE_API_BASE_URL}}
     # Étapes de la tâche
     steps:
       # Récupère le code du dépôt (copie notre code dans le runner Ubuntu → git checkout S19E02-gh-pages)
@@ -81,6 +84,10 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
+    env:
+      # On reseigne la variable d'environnement configurée dans `Settings > environment`
+      VITE_API_BASE_URL: ${{vars.VITE_API_BASE_URL}}
+
     steps:
       # Déploiement de l'artefact précédemment créé sur GH Pages
       - name: 🚀 Déploiement sur GitHub Pages
