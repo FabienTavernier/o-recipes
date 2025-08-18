@@ -74,3 +74,19 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+
+# Tâche pour déployer sur GH Pages
+  deploy:
+    needs: build  # Cette tâche dépend du succès de la tâche `build`
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      # Déploiement de l'artefact précédemment créé sur GH Pages
+      - name: 🚀 Déploiement sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4.0.5
+
+      # Affichage de l'URL du site
+      - name: 🔗 URL du site déployé
+        run: echo "🔗 Votre site est disponible à ${{ steps.deployment.outputs.page_url }}"
