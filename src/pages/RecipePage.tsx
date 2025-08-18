@@ -35,6 +35,9 @@ export default function RecipePage() {
           <p>
             {recipe.author} – {recipe.difficulty}
           </p>
+          <button type="button" className="button">
+            Ajouter les ingrédients à la liste
+          </button>
         </div>
         <img src={recipe.thumbnail} alt={recipe.title} />
       </div>
