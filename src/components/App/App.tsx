@@ -108,7 +108,7 @@ export default function App() {
           </div>
         </div>
 
-        <div className="app-list app-list--expanded">
+        <div className={showList ? 'app-list app-list--expanded' : 'app-list'}>
           <h3>MA FUTURE LISTE</h3>
         </div>
       </div>
