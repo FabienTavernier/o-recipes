@@ -1,6 +1,5 @@
-import Card from '@/components/Card/Card';
-
 import type { Recipe } from '@/@types';
+import Card from '@/components/Card/Card';
 
 type HomePageProps = {
   recipes: Recipe[];

@@ -1,9 +1,7 @@
 import { isAxiosError } from 'axios';
 import { useEffect, useState } from 'react';
-
-import Card from '@/components/Card/Card';
-
 import type { Alert, Recipe } from '@/@types';
+import Card from '@/components/Card/Card';
 import * as api from '@/services/api';
 
 type FavoritesPageProps = {

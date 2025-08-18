@@ -1,11 +1,10 @@
 import './Header.scss';
 
-import * as api from '@/services/api';
-import * as ls from '@/services/localStorage';
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router';
-
 import type { Alert } from '@/@types';
+import * as api from '@/services/api';
+import * as ls from '@/services/localStorage';
 
 type HeaderProps = {
   isLogged: boolean;

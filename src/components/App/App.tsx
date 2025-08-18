@@ -3,22 +3,17 @@ import './App.scss';
 import { isAxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router';
-
+import type { Alert, Recipe } from '@/@types';
 import FavoritesPage from '@/pages/FavoritesPage';
 import HomePage from '@/pages/HomePage';
 import NotFoundPage from '@/pages/NotFoundPage';
 import RecipePage from '@/pages/RecipePage';
-
-import Header from './Header/Header';
-import SideBar from './Sidebar/Sidebar';
-
-import Notification from '../ui/Notification/Notification';
-import Spinner from '../ui/Spinner/Spinner';
-
 import * as api from '@/services/api';
 import * as ls from '@/services/localStorage';
-
-import type { Alert, Recipe } from '@/@types';
+import Notification from '../ui/Notification/Notification';
+import Spinner from '../ui/Spinner/Spinner';
+import Header from './Header/Header';
+import SideBar from './Sidebar/Sidebar';
 
 export default function App() {
   const location = useLocation();

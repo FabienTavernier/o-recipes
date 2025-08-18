@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-
-import Spinner from '@/components/ui/Spinner/Spinner';
-
 import type { Recipe } from '@/@types';
+import Spinner from '@/components/ui/Spinner/Spinner';
 import * as api from '@/services/api';
 
 export default function RecipePage() {

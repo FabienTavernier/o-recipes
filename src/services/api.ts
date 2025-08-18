@@ -1,5 +1,5 @@
-import type { Credentials, Recipe } from '@/@types';
 import axios from 'axios';
+import type { Credentials, Recipe } from '@/@types';
 
 export {
   addTokenToInstance,
