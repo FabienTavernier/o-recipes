@@ -75,7 +75,7 @@ export default function Header({
           <input placeholder="Adresse e-mail" name="email" type="email" />
           <input placeholder="Mot de passe" name="password" type="password" />
           <button type="submit" className="button">
-            OK
+            Se connecter
           </button>
         </form>
       )}
