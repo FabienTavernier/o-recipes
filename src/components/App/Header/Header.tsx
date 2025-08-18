@@ -12,12 +12,14 @@ type HeaderProps = {
   isLogged: boolean;
   setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
   setAlert: React.Dispatch<React.SetStateAction<Alert | null>>;
+  setShowList: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function Header({
   isLogged,
   setIsLogged,
   setAlert,
+  setShowList,
 }: HeaderProps) {
   const navigate = useNavigate();
 
@@ -89,7 +91,7 @@ export default function Header({
           className="button button--dark button--tag"
           data-count={3}
           aria-label={`Afficher la liste des ingrédients (${3} éléments)`}
-          onClick={() => console.log('CLICKED on cart')}
+          onClick={() => setShowList((show) => !show)}
         >
           <CartIcon className="cart-icon" />
         </button>

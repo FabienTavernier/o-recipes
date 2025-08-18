@@ -88,6 +88,7 @@ export default function App() {
               isLogged={isLogged}
               setIsLogged={setIsLogged}
               setAlert={setAlert}
+              setShowList={setShowList}
             />
 
             <hr />
