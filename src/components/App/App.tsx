@@ -10,6 +10,7 @@ import NotFoundPage from '@/pages/NotFoundPage';
 import RecipePage from '@/pages/RecipePage';
 
 import Header from './Header/Header';
+import List from './List/List';
 import SideBar from './Sidebar/Sidebar';
 
 import Notification from '../ui/Notification/Notification';
@@ -110,7 +111,7 @@ export default function App() {
         </div>
 
         <div className={showList ? 'app-list app-list--expanded' : 'app-list'}>
-          <h3>MA FUTURE LISTE</h3>
+          <List />
         </div>
       </div>
     </>
