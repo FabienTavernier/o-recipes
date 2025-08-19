@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
-import * as api from '@/services/api';
-
 import type { Recipe } from '@/@types';
+import * as api from '@/services/api';
 
 type RecipesState = {
   recipes: Recipe[];
@@ -35,7 +33,7 @@ export const fetchRecipes = createAsyncThunk(
       // avec un message personnalisé
       return rejectWithValue('Erreur lors du chargement des recettes');
     }
-  }
+  },
 );
 
 const recipesSlice = createSlice({
@@ -71,7 +69,7 @@ const recipesSlice = createSlice({
         // je peux récupérer des erreurs dans l'action elle-même
         console.log(action.error);
       });
-  }
+  },
 });
 
 export default recipesSlice.reducer;

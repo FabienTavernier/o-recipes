@@ -1,17 +1,16 @@
 import './App.scss';
 
-import { isAxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router';
-import type { Alert, Recipe } from '@/@types';
+import type { Alert } from '@/@types';
 import FavoritesPage from '@/pages/FavoritesPage';
 import HomePage from '@/pages/HomePage';
 import NotFoundPage from '@/pages/NotFoundPage';
 import RecipePage from '@/pages/RecipePage';
 import * as api from '@/services/api';
 import * as ls from '@/services/localStorage';
-import { useAppSelector } from '@/store/hooks';
-
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { fetchRecipes } from '@/store/slices/recipesSlice';
 import Notification from '../ui/Notification/Notification';
 import Spinner from '../ui/Spinner/Spinner';
 import Header from './Header/Header';
@@ -19,10 +18,12 @@ import List from './List/List';
 import SideBar from './Sidebar/Sidebar';
 
 export default function App() {
+  // pour gérer les recettes, on passe désormais par le store
+  const { isLoading, recipes } = useAppSelector((state) => state.recipes);
+  const dispatch = useAppDispatch();
+
   const location = useLocation();
 
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [alert, setAlert] = useState<Alert | null>(null);
 
   const [isLogged, setIsLogged] = useState(false);
@@ -32,27 +33,6 @@ export default function App() {
   const showList = useAppSelector((state) => state.list.isExpanded);
 
   useEffect(() => {
-    async function fetchRecipes() {
-      try {
-        const recipes = await api.getRecipes();
-
-        setRecipes(recipes);
-        setAlert(null);
-      } catch (error) {
-        const message =
-          isAxiosError(error) || error instanceof Error
-            ? error.message
-            : 'code inconnu';
-
-        setAlert({
-          status: 'error',
-          message,
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
     function getToken() {
       const token = ls.getToken();
 
@@ -62,9 +42,11 @@ export default function App() {
       }
     }
 
-    fetchRecipes();
     getToken();
-  }, []);
+
+    // J'appelle mon action « asynchrone », mon thunk
+    dispatch(fetchRecipes());
+  }, [dispatch]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: scroll when URL changes
   useEffect(() => {
