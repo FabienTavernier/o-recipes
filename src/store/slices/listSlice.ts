@@ -10,23 +10,9 @@ type ListState = {
   ingredients: Omit<Ingredient, 'id'>[];
 };
 
-// Pour le moment, je renseigne des fausses données pour mon store
-const FAKE_DATA: Omit<Ingredient, 'id'>[] = [
-  {
-    name: 'beurre de cacahuètes crunchy',
-    quantity: 150,
-    unit: 'g',
-  },
-  {
-    name: 'œuf',
-    quantity: 3,
-    unit: '',
-  },
-];
-
 const initialState: ListState = {
   isExpanded: false,
-  ingredients: FAKE_DATA,
+  ingredients: [],
 };
 
 const listSlice = createSlice({
