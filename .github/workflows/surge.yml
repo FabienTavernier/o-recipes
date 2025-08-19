@@ -3,7 +3,8 @@ name: Deploy to Surge
 # 1. on détermine l'évènement qui lancera le workflow
 on:
   # … au push sur la branche `S19E03-surge`
-  push: ["S19E03-surge"]
+  push:
+    branches: ["S19E03-surge"]
   # … permet le déclenchement manuel
   workflow_dispatch:
 
