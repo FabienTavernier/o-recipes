@@ -10,6 +10,7 @@ import NotFoundPage from '@/pages/NotFoundPage';
 import RecipePage from '@/pages/RecipePage';
 import * as api from '@/services/api';
 import * as ls from '@/services/localStorage';
+import { useAppSelector } from '@/store/hooks';
 
 import Notification from '../ui/Notification/Notification';
 import Spinner from '../ui/Spinner/Spinner';
@@ -26,7 +27,9 @@ export default function App() {
 
   const [isLogged, setIsLogged] = useState(false);
 
-  const [showList, setShowList] = useState(false);
+  // mon état local va être remplacé par mon store
+  // const [showList, setShowList] = useState(false);
+  const showList = useAppSelector((state) => state.list.isExpanded);
 
   useEffect(() => {
     async function fetchRecipes() {
@@ -85,7 +88,7 @@ export default function App() {
               isLogged={isLogged}
               setIsLogged={setIsLogged}
               setAlert={setAlert}
-              setShowList={setShowList}
+              // setShowList={setShowList} // plus besoin : je dispatcherai mon action pour parler à mon store
             />
 
             <hr />
