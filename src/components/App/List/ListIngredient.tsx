@@ -1,16 +1,37 @@
 import type { Ingredient } from '@/@types';
+import { useAppDispatch } from '@/store/hooks';
+import {
+  changeIngredientQuantity,
+  removeIngredient,
+} from '@/store/slices/listSlice';
 
 type ListIngredient = {
   ingredient: Omit<Ingredient, 'id'>;
 };
 
 export default function ListIngredient({ ingredient }: ListIngredient) {
-  function updateQuantity() {
-    throw new Error('updateQuantity not implemented.');
+  const dispatch = useAppDispatch();
+
+  function updateQuantity(event: React.ChangeEvent<HTMLInputElement>) {
+    // Quand je mets à jour la quantité, j'ai 2 cas :
+    //   - la nouvelle quantité est égale à 0 → je supprime l'ingrédient de la liste
+    //   - différente de 0 → je change la quantité avec la valeur de mon input
+    const newQty = Number(event.currentTarget.value);
+
+    if (newQty === 0) {
+      remove();
+    } else {
+      dispatch(
+        changeIngredientQuantity({
+          name: ingredient.name,
+          qty: newQty,
+        }),
+      );
+    }
   }
 
-  function removeIngredient() {
-    throw new Error('removeIngredient not implemented.');
+  function remove() {
+    dispatch(removeIngredient(ingredient.name));
   }
 
   return (
@@ -32,7 +53,7 @@ export default function ListIngredient({ ingredient }: ListIngredient) {
         type="button"
         className="button button--ghost"
         title="Supprimer"
-        onClick={removeIngredient}
+        onClick={remove}
       >
         X
       </button>
