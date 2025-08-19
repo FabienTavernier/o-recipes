@@ -1,15 +1,13 @@
 name: Deploy to Surge
 
-# Contrôle l'exécution du workflow
+# 1. on détermine l'évènement qui lancera le workflow
 on:
-  # Déclenchement lors d'un push mais uniquement sur la branche `S19E03-surge`
-  push:
-    branches: ["S19E03-surge"]
-
-  # Autorisation de déclencher manuellement du workflow depuis l'onglet « Actions » du dépôt GH
+  # … au push sur la branche `S19E03-surge`
+  push: ["S19E03-surge"]
+  # … permet le déclenchement manuel
   workflow_dispatch:
-  
-# Définition des permissions nécessaire pour GH Pages
+
+# Définition des permissions nécessaires
 permissions:
   # Permission de lire le contenu du dépôt
   # (nécessaire pour le processus de checkout du code, comme dans l'étape actions/checkout@v4)
@@ -18,9 +16,18 @@ permissions:
   # (peut être nécessaire pour interagir avec d'autres services ou APIs externes pour prouver l'identité du workflow ; ex. : Google Cloud, authentification OAuth…)
   id-token: write
 
-# Un workflow est composé d'une ou plusieurs tâches exécutées de manière séquentielle ou en parallèle
 jobs:
-  # Tâche pour le build du projet
+  # Besoins
+  #   Node
+  #   PNPM
+  #   Surge (global)
+  #   Token surge (dans les secrets)
+  #   Build le projet
+  #
+  # Commande
+  # surge ./dist https://orecipes-gilgamesh.surge.sh --token ${{ secrets.SURGE_TOKEN }}
+  
+  # Tâche pour le build ET le déploiement du projet
   build_and_deploy:
     # Type du runner : la tâche s'exécute sur un Ubuntu
     runs-on: ubuntu-latest
@@ -35,21 +42,16 @@ jobs:
       - name: 📥 Checkout du code
         uses: actions/checkout@v4
 
-      - name: ❤️ Utilisation de PNPM
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-          run_install: false
-
       # Prépare l'environnement Node
       - name: ⚙️ Setup de l'environnement Node.js
         uses: actions/setup-node@v4
         # with:
           # node-version: 22
 
-      # Installation des dépendances
-      - name: 📦 Installation des dépendances
-        run: pnpm install
+      - name: ❤️ Utilisation de PNPM et installation des dépendances
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: true
 
       # Lancement des tests
       - name: 🧪 Lancement des tests
@@ -78,5 +80,6 @@ jobs:
       # Déploiement
       # (https://thecodersblog.com/deploying-static-website-surge-github-actions)
       # (https://dev.to/usamasubhani/deploy-react-apps-on-surge-using-github-actions-free-2h7i)
+      # (https://github.com/yavisht/deploy-via-surge.sh-github-action-template)
       - name: Déploiement
         run: surge ./dist ${{ vars.SURGE_DOMAIN }} --token ${{ secrets.SURGE_TOKEN }}
