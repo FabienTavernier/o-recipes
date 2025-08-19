@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import listReducer from './slices/listSlice';
+import recipesReducer from './slices/recipesSlice';
 
 export const store = configureStore({
   reducer: {
     list: listReducer,
+    recipes: recipesReducer,
   },
 });
 
