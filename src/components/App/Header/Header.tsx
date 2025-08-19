@@ -6,7 +6,7 @@ import type { Alert } from '@/@types';
 import CartIcon from '@/assets/icons/cart.svg?react';
 import * as api from '@/services/api';
 import * as ls from '@/services/localStorage';
-import { useAppDispatch } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { toggle } from '@/store/slices/listSlice';
 
 type HeaderProps = {
@@ -20,6 +20,9 @@ export default function Header({
   setIsLogged,
   setAlert,
 }: HeaderProps) {
+  // Je vais chercher le nombre d'ingrédients dans ma liste pour le mettre dans le badge
+  const countList = useAppSelector((state) => state.list.ingredients.length);
+
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -89,8 +92,8 @@ export default function Header({
         <button
           type="button"
           className="button button--dark button--tag"
-          data-count={3}
-          aria-label={`Afficher la liste des ingrédients (${3} éléments)`}
+          data-count={countList}
+          aria-label={`Afficher la liste des ingrédients (${countList} éléments)`}
           // au clic, j'émets mon intention de modifier le store
           // → j'émets mon action
           onClick={() => dispatch(toggle())}
