@@ -3,8 +3,12 @@ import { useNavigate, useParams } from 'react-router';
 import type { Recipe } from '@/@types';
 import Spinner from '@/components/ui/Spinner/Spinner';
 import * as api from '@/services/api';
+import { useAppDispatch } from '@/store/hooks';
+import { addIngredients } from '@/store/slices/listSlice';
 
 export default function RecipePage() {
+  const dispatch = useAppDispatch();
+
   const { slug } = useParams();
   const navigate = useNavigate();
 
@@ -35,7 +39,12 @@ export default function RecipePage() {
           <p>
             {recipe.author} – {recipe.difficulty}
           </p>
-          <button type="button" className="button">
+          <button
+            type="button"
+            className="button"
+            // au clic, j'ajoute les ingrédients de ma recette à la liste
+            onClick={() => dispatch(addIngredients(recipe.ingredients))}
+          >
             Ajouter les ingrédients à la liste
           </button>
         </div>
