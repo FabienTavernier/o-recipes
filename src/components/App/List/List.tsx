@@ -1,27 +1,12 @@
+import { useAppSelector } from '@/store/hooks';
 import './List.scss';
 
-import type { Ingredient } from '@/@types';
 import ListIngredient from './ListIngredient';
 
-const ingredients: Omit<Ingredient, 'id'>[] = [
-  {
-    name: 'beurre de cacahuètes crunchy',
-    quantity: 120,
-    unit: 'g',
-  },
-  {
-    name: 'œuf',
-    quantity: 3,
-    unit: '',
-  },
-  {
-    name: 'sel',
-    quantity: 3,
-    unit: 'pincée',
-  },
-];
-
 export default function List() {
+  // je vais chercher mes ingredients depuis mon store
+  const ingredients = useAppSelector((state) => state.list.ingredients);
+
   return (
     <aside className="list list--open">
       <div className="list-top">
