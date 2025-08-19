@@ -6,20 +6,22 @@ import type { Alert } from '@/@types';
 import CartIcon from '@/assets/icons/cart.svg?react';
 import * as api from '@/services/api';
 import * as ls from '@/services/localStorage';
+import { useAppDispatch } from '@/store/hooks';
+import { toggle } from '@/store/slices/listSlice';
 
 type HeaderProps = {
   isLogged: boolean;
   setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
   setAlert: React.Dispatch<React.SetStateAction<Alert | null>>;
-  setShowList: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function Header({
   isLogged,
   setIsLogged,
   setAlert,
-  setShowList,
 }: HeaderProps) {
+  const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
 
   async function login(event: React.FormEvent<HTMLFormElement>) {
@@ -89,7 +91,9 @@ export default function Header({
           className="button button--dark button--tag"
           data-count={3}
           aria-label={`Afficher la liste des ingrédients (${3} éléments)`}
-          onClick={() => setShowList((show) => !show)}
+          // au clic, j'émets mon intention de modifier le store
+          // → j'émets mon action
+          onClick={() => dispatch(toggle())}
         >
           <CartIcon className="cart-icon" />
         </button>
