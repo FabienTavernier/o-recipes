@@ -3,10 +3,9 @@ import './Header.scss';
 import { isAxiosError } from 'axios';
 import { useNavigate } from 'react-router';
 import type { Alert } from '@/@types';
+import CartIcon from '@/assets/icons/cart.svg?react';
 import * as api from '@/services/api';
 import * as ls from '@/services/localStorage';
-
-import CartIcon from '@/assets/icons/cart.svg?react';
 
 type HeaderProps = {
   isLogged: boolean;
@@ -69,7 +68,6 @@ export default function Header({
       <img src="/logo.png" alt="O'recipes" />
 
       <div className="header-action">
-
         {isLogged && (
           <button className="button" type="button" onClick={logout}>
             Se déconnecter
@@ -87,7 +85,7 @@ export default function Header({
         )}
 
         <button
-        type="button"
+          type="button"
           className="button button--dark button--tag"
           data-count={3}
           aria-label={`Afficher la liste des ingrédients (${3} éléments)`}

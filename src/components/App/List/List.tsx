@@ -1,8 +1,7 @@
 import './List.scss';
 
-import ListIngredient from './ListIngredient';
-
 import type { Ingredient } from '@/@types';
+import ListIngredient from './ListIngredient';
 
 const ingredients: Omit<Ingredient, 'id'>[] = [
   {
