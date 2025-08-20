@@ -17,6 +17,8 @@ export type Ingredient = {
   unit: string;
 };
 
+export type IngredientInList = Omit<Ingredient, 'id'>;
+
 export type Credentials = {
   email: string;
   password: string;
