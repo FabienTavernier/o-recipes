@@ -10,6 +10,12 @@ type ListState = {
   ingredients: IngredientInList[];
 };
 
+// on peut séparer les types qui concernent les valeurs d'état
+// et les types pour les actions
+type ListActions = {
+  toggle: () => void; // toggle est une fonction qui ne retourne rien
+};
+
 // Temporairement, j'ajoute en dur des ingrédients pour m'aider au développement
 const FAKE_DATA: IngredientInList[] = [
   {
@@ -30,9 +36,46 @@ const FAKE_DATA: IngredientInList[] = [
 //
 // Zustand me propose d'utiliser les devTools Redux
 // → https://zustand.docs.pmnd.rs/middlewares/devtools
-export const useListStore = create<ListState>()(
-  devtools(() => ({
+//
+// Comme je sépare mes types pour las variables et les types pour mes actions,
+// je dois les combiner ici pour bien typer mon store
+// → je crée un type qui combine les propriétés de mon état et les méthodes d'actions
+export const useListStore = create<ListState & ListActions>()(
+  // je vais ajouter une action qui va modifier l'état grâce à la fonction `set()`,
+  // cette fonction vient automatiquement de Zustand
+  devtools((set) => ({
     isExpanded: false,
     ingredients: FAKE_DATA,
+
+    // `set` prend comme argument notre action :
+    // une fonction qui prend l'état actuel en paramètre et
+    // retourne un nouvel objet d'état ;
+    // on n'indique que la ou les propriétés à modifier (le reste sera inchangé)
+    //
+    // NOTE attention à ne pas se perdre avec les accolades et les parenthèses !
+    // C'est « LA » grosse difficulté de Zustand.
+    //
+    // RAPPEL sur les retours d'une fonctions fléchées : explicite vs implicite
+    //
+    // explicite : plus verbeux mais peut-être plus lisible
+    // implicite : plus concis mais peut être difficilement lisible avec les objets
+    //
+    // explicite :
+    // const func = () => {
+    //   return 'hello';
+    // };
+    // const func = () => {
+    //   return {
+    //     name: 'Dave Lopper',
+    //   };
+    // };
+    //
+    // implicite :
+    // const func = () => 'hello';
+    //
+    // particularité → pour ne pas « confondre » les accolades de l'objet avec les accolades
+    // de la fonction, on entoure notre objet de parenthèses
+    // const func = () => ({ name: 'Dave Lopper' });
+    toggle: () => set((state) => ({ isExpanded: !state.isExpanded })),
   })),
 );
