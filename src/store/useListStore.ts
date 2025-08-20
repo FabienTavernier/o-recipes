@@ -19,6 +19,7 @@ type ListActions = {
   // on les passe directement en paramètres de notre action
   // (équivalent action.payload de Redux mais en plus simple !)
   addIngredients: (ingredients: IngredientInList[]) => void;
+  removeIngredient: (name: string) => void;
 };
 
 // Temporairement, j'ajoute en dur des ingrédients pour m'aider au développement
@@ -123,6 +124,15 @@ export const useListStore = create<ListState & ListActions>()(
         },
         undefined,
         'list/addIngredients',
+      ),
+
+    removeIngredient: (name) =>
+      set(
+        (state) => ({
+          ingredients: state.ingredients.filter((i) => i.name !== name),
+        }),
+        undefined,
+        'list/removeIngredient',
       ),
   })),
 );

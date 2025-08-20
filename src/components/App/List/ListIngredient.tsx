@@ -1,3 +1,5 @@
+import { useListStore } from '@/store/useListStore';
+
 import type { Ingredient } from '@/@types';
 
 type ListIngredient = {
@@ -5,12 +7,14 @@ type ListIngredient = {
 };
 
 export default function ListIngredient({ ingredient }: ListIngredient) {
+  const removeFromList = useListStore((state) => state.removeIngredient);
+
   function updateQuantity() {
     throw new Error('updateQuantity not implemented.');
   }
 
   function removeIngredient() {
-    throw new Error('removeIngredient not implemented.');
+    removeFromList(ingredient.name);
   }
 
   return (
