@@ -21,17 +21,17 @@ export const useRecipesStore = create<RecipesState & RecipesActions>()(
     error: null,
 
     fetchRecipes: async () => {
-      set({ isLoading: true, error: null });
+      set({ isLoading: true, error: null }, undefined, 'recipes/fetch.pending');
       try {
         const data = await api.getRecipes();
-        set({ recipes: data, isLoading: false });
+        set({ recipes: data, isLoading: false }, undefined, 'recipes/fetch.fulfilled');
       } catch (err) {
         const error: Alert = {
           status: 'error',
           message: 'Erreur lors du chargement des recettes',
         };
 
-        set({ error, isLoading: false });
+        set({ error, isLoading: false }, undefined, 'recipes/fetch.rejected');
         console.error(err);
       }
     },
