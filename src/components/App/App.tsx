@@ -10,6 +10,7 @@ import NotFoundPage from '@/pages/NotFoundPage';
 import RecipePage from '@/pages/RecipePage';
 import * as api from '@/services/api';
 import * as ls from '@/services/localStorage';
+import { useListStore } from '@/store/useListStore';
 
 import Notification from '../ui/Notification/Notification';
 import Spinner from '../ui/Spinner/Spinner';
@@ -26,7 +27,10 @@ export default function App() {
 
   const [isLogged, setIsLogged] = useState(false);
 
-  const [showList, setShowList] = useState(false);
+  // const [showList, setShowList] = useState(false);
+  // on va gérer l'ouverture/fermeture par le store
+  // j'utilise le hook avec un sélecteur me retournant la valeur attendue
+  const showList = useListStore((state) => state.isExpanded);
 
   useEffect(() => {
     async function fetchRecipes() {
@@ -85,7 +89,6 @@ export default function App() {
               isLogged={isLogged}
               setIsLogged={setIsLogged}
               setAlert={setAlert}
-              setShowList={setShowList}
             />
 
             <hr />

@@ -1,5 +1,5 @@
-import type { IngredientInList } from '@/@types';
 import { create } from 'zustand';
+import type { IngredientInList } from '@/@types';
 
 // La liste a 2 états :
 //   - son statut d'ouverture
