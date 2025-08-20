@@ -20,6 +20,7 @@ type ListActions = {
   // (équivalent action.payload de Redux mais en plus simple !)
   addIngredients: (ingredients: IngredientInList[]) => void;
   removeIngredient: (name: string) => void;
+  changeIngredientQuantity: (name: string, quantity: number) => void;
 };
 
 // Temporairement, j'ajoute en dur des ingrédients pour m'aider au développement
@@ -133,6 +134,21 @@ export const useListStore = create<ListState & ListActions>()(
         }),
         undefined,
         'list/removeIngredient',
+      ),
+
+    changeIngredientQuantity: (name, quantity) =>
+      set(
+        (state) => ({
+          ingredients: state.ingredients.map((i) => {
+            if (i.name === name) {
+              i.quantity = quantity;
+            }
+
+            return i;
+          }),
+        }),
+        undefined,
+        'list/changeIngredientQuantity',
       ),
   })),
 );

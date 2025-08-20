@@ -8,9 +8,18 @@ type ListIngredient = {
 
 export default function ListIngredient({ ingredient }: ListIngredient) {
   const removeFromList = useListStore((state) => state.removeIngredient);
+  const changeQuantity = useListStore(
+    (state) => state.changeIngredientQuantity,
+  );
 
-  function updateQuantity() {
-    throw new Error('updateQuantity not implemented.');
+  function updateQuantity(event: React.ChangeEvent<HTMLInputElement>) {
+    const newQuantity = Number(event.currentTarget.value);
+
+    if (newQuantity === 0) {
+      removeIngredient();
+    } else {
+      changeQuantity(ingredient.name, newQuantity);
+    }
   }
 
   function removeIngredient() {
