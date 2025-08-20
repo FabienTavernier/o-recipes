@@ -14,6 +14,7 @@ type ListState = {
 // et les types pour les actions
 type ListActions = {
   toggle: () => void; // toggle est une fonction qui ne retourne rien
+  clear: () => void;
 };
 
 // Temporairement, j'ajoute en dur des ingrédients pour m'aider au développement
@@ -86,5 +87,7 @@ export const useListStore = create<ListState & ListActions>()(
         undefined, // indique si on remplace tout l'état par le 1er argument
         'list/toggle', // permet de nommer l'action dans les devtools
       ),
+
+    clear: () => set(() => ({ ingredients: [] }), undefined, 'list/clear'),
   })),
 );
