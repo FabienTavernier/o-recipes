@@ -6,20 +6,22 @@ import type { Alert } from '@/@types';
 import CartIcon from '@/assets/icons/cart.svg?react';
 import * as api from '@/services/api';
 import * as ls from '@/services/localStorage';
+import { useListStore } from '@/store/useListStore';
 
 type HeaderProps = {
   isLogged: boolean;
   setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
   setAlert: React.Dispatch<React.SetStateAction<Alert | null>>;
-  setShowList: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function Header({
   isLogged,
   setIsLogged,
   setAlert,
-  setShowList,
 }: HeaderProps) {
+  // utilisation de `toggle` depuis le store pour ouvrir/fermer la liste
+  const toggle = useListStore((state) => state.toggle);
+
   const navigate = useNavigate();
 
   async function login(event: React.FormEvent<HTMLFormElement>) {
@@ -89,7 +91,7 @@ export default function Header({
           className="button button--dark button--tag"
           data-count={3}
           aria-label={`Afficher la liste des ingrédients (${3} éléments)`}
-          onClick={() => setShowList((show) => !show)}
+          onClick={toggle}
         >
           <CartIcon className="cart-icon" />
         </button>
