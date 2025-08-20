@@ -1,27 +1,13 @@
 import './List.scss';
 
-import type { Ingredient } from '@/@types';
+import { useListStore } from '@/store/useListStore';
+
 import ListIngredient from './ListIngredient';
 
-const ingredients: Omit<Ingredient, 'id'>[] = [
-  {
-    name: 'beurre de cacahuètes crunchy',
-    quantity: 120,
-    unit: 'g',
-  },
-  {
-    name: 'œuf',
-    quantity: 3,
-    unit: '',
-  },
-  {
-    name: 'sel',
-    quantity: 3,
-    unit: 'pincée',
-  },
-];
-
 export default function List() {
+  // on récupère les ingrédients de la liste depuis le store
+  const ingredients = useListStore((state) => state.ingredients);
+
   return (
     <aside className="list list--open">
       <div className="list-top">
