@@ -3,8 +3,11 @@ import { useNavigate, useParams } from 'react-router';
 import type { Recipe } from '@/@types';
 import Spinner from '@/components/ui/Spinner/Spinner';
 import * as api from '@/services/api';
+import { useListStore } from '@/store/useListStore';
 
 export default function RecipePage() {
+  const addIngredients = useListStore((state) => state.addIngredients);
+
   const { slug } = useParams();
   const navigate = useNavigate();
 
@@ -35,7 +38,11 @@ export default function RecipePage() {
           <p>
             {recipe.author} – {recipe.difficulty}
           </p>
-          <button type="button" className="button">
+          <button
+            type="button"
+            className="button"
+            onClick={() => addIngredients(recipe.ingredients)}
+          >
             Ajouter les ingrédients à la liste
           </button>
         </div>

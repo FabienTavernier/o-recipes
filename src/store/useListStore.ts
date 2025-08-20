@@ -15,6 +15,10 @@ type ListState = {
 type ListActions = {
   toggle: () => void; // toggle est une fonction qui ne retourne rien
   clear: () => void;
+  // pour ajouter des ingrédients à la liste, il nous faut… des ingrédients
+  // on les passe directement en paramètres de notre action
+  // (équivalent action.payload de Redux mais en plus simple !)
+  addIngredients: (ingredients: IngredientInList[]) => void;
 };
 
 // Temporairement, j'ajoute en dur des ingrédients pour m'aider au développement
@@ -89,5 +93,15 @@ export const useListStore = create<ListState & ListActions>()(
       ),
 
     clear: () => set(() => ({ ingredients: [] }), undefined, 'list/clear'),
+
+    addIngredients: (ingredients) =>
+      set(
+        (state) => ({
+          // code immuable (sauf utilisation du MW immer)
+          ingredients: [...state.ingredients, ...ingredients],
+        }),
+        undefined,
+        'list/addIngredients',
+      ),
   })),
 );
