@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 import type { IngredientInList } from '@/@types';
 
 // La liste a 2 états :
@@ -26,7 +27,12 @@ const FAKE_DATA: IngredientInList[] = [
 // CONVENTION : le nom du store commence par `use` et fini par `Store`
 // attention à la syntaxe particulière en TS
 // → https://zustand.docs.pmnd.rs/guides/typescript#basic-usage
-export const useListStore = create<ListState>()(() => ({
-  isExpanded: false,
-  ingredients: FAKE_DATA,
-}));
+//
+// Zustand me propose d'utiliser les devTools Redux
+// → https://zustand.docs.pmnd.rs/middlewares/devtools
+export const useListStore = create<ListState>()(
+  devtools(() => ({
+    isExpanded: false,
+    ingredients: FAKE_DATA,
+  })),
+);
