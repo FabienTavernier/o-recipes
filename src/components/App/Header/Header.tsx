@@ -19,9 +19,7 @@ export default function Header({
   setIsLogged,
   setAlert,
 }: HeaderProps) {
-  // utilisation de `toggle` depuis le store pour ouvrir/fermer la liste
   const toggle = useListStore((state) => state.toggle);
-  // compte le nombre d'ingrédients dans la liste
   const countIngredients = useListStore((state) => state.ingredients.length);
 
   const navigate = useNavigate();

@@ -1,6 +1,5 @@
-import { useListStore } from '@/store/useListStore';
-
 import type { Ingredient } from '@/@types';
+import { useListStore } from '@/store/useListStore';
 
 type ListIngredient = {
   ingredient: Omit<Ingredient, 'id'>;

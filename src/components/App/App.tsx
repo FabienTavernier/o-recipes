@@ -27,9 +27,6 @@ export default function App() {
 
   const [isLogged, setIsLogged] = useState(false);
 
-  // const [showList, setShowList] = useState(false);
-  // on va gérer l'ouverture/fermeture par le store
-  // j'utilise le hook avec un sélecteur me retournant la valeur attendue
   const showList = useListStore((state) => state.isExpanded);
 
   useEffect(() => {
