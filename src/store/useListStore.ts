@@ -76,6 +76,15 @@ export const useListStore = create<ListState & ListActions>()(
     // particularité → pour ne pas « confondre » les accolades de l'objet avec les accolades
     // de la fonction, on entoure notre objet de parenthèses
     // const func = () => ({ name: 'Dave Lopper' });
-    toggle: () => set((state) => ({ isExpanded: !state.isExpanded })),
+    //
+    // Par défaut, les actions sont nommées `anonymous` dans les devTools,
+    // on peut y remédier en utilisant un 3ème argument dans la fonction `set`
+    // → https://zustand.docs.pmnd.rs/middlewares/devtools#all-action-names-are-labeled-as-'anonymous'
+    toggle: () =>
+      set(
+        (state) => ({ isExpanded: !state.isExpanded }), // l'action
+        undefined, // indique si on remplace tout l'état par le 1er argument
+        'list/toggle', // permet de nommer l'action dans les devtools
+      ),
   })),
 );
