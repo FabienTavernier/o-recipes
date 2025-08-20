@@ -23,20 +23,6 @@ type ListActions = {
   changeIngredientQuantity: (name: string, quantity: number) => void;
 };
 
-// Temporairement, j'ajoute en dur des ingrédients pour m'aider au développement
-const FAKE_DATA: IngredientInList[] = [
-  {
-    name: 'beurre de cacahuètes crunchy',
-    quantity: 150,
-    unit: 'g',
-  },
-  {
-    name: 'œuf',
-    quantity: 3,
-    unit: '',
-  },
-];
-
 // CONVENTION : le nom du store commence par `use` et fini par `Store`
 // attention à la syntaxe particulière en TS
 // → https://zustand.docs.pmnd.rs/guides/typescript#basic-usage
@@ -52,7 +38,7 @@ export const useListStore = create<ListState & ListActions>()(
   // cette fonction vient automatiquement de Zustand
   devtools((set) => ({
     isExpanded: false,
-    ingredients: FAKE_DATA,
+    ingredients: [],
 
     // `set` prend comme argument notre action :
     // une fonction qui prend l'état actuel en paramètre et
