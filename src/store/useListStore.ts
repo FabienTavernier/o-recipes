@@ -96,10 +96,31 @@ export const useListStore = create<ListState & ListActions>()(
 
     addIngredients: (ingredients) =>
       set(
-        (state) => ({
-          // code immuable (sauf utilisation du MW immer)
-          ingredients: [...state.ingredients, ...ingredients],
-        }),
+        (state) => {
+          // on prépare nos ingrédients en les récupérant depuis le store
+          const updatedIngredients = [...state.ingredients];
+
+          // pour chaque ingrédients reçus
+          for (const { name, quantity, unit } of ingredients) {
+            // on regarde si il est déjà dans la liste (même nom)
+            const existing = updatedIngredients.find((i) => i.name === name);
+
+            if (existing) {
+              // si OUI, on augmente sa quantité
+              existing.quantity += quantity;
+            } else {
+              // si NON, on l'ajoute à la liste
+              updatedIngredients.push({
+                name,
+                quantity,
+                unit,
+              });
+            }
+          }
+
+          // on retourne les ingrédients mis à jour
+          return { ingredients: updatedIngredients };
+        },
         undefined,
         'list/addIngredients',
       ),
