@@ -21,6 +21,8 @@ export default function Header({
 }: HeaderProps) {
   // utilisation de `toggle` depuis le store pour ouvrir/fermer la liste
   const toggle = useListStore((state) => state.toggle);
+  // compte le nombre d'ingrédients dans la liste
+  const countIngredients = useListStore((state) => state.ingredients.length);
 
   const navigate = useNavigate();
 
@@ -89,8 +91,8 @@ export default function Header({
         <button
           type="button"
           className="button button--dark button--tag"
-          data-count={3}
-          aria-label={`Afficher la liste des ingrédients (${3} éléments)`}
+          data-count={countIngredients}
+          aria-label={`Afficher la liste des ingrédients (${countIngredients} éléments)`}
           onClick={toggle}
         >
           <CartIcon className="cart-icon" />
