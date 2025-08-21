@@ -7,20 +7,21 @@ import CartIcon from '@/assets/icons/cart.svg?react';
 import * as api from '@/services/api';
 import * as ls from '@/services/localStorage';
 import { useListStore } from '@/store/useListStore';
+import { useAlertStore } from '@/store/useAlertStore';
 
 type HeaderProps = {
   isLogged: boolean;
   setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
-  setAlert: React.Dispatch<React.SetStateAction<Alert | null>>;
 };
 
 export default function Header({
   isLogged,
   setIsLogged,
-  setAlert,
 }: HeaderProps) {
   const toggle = useListStore((state) => state.toggle);
   const countIngredients = useListStore((state) => state.ingredients.length);
+
+  const setAlert = useAlertStore((state) => state.setAlert);
 
   const navigate = useNavigate();
 

@@ -1,14 +1,13 @@
 import { isAxiosError } from 'axios';
 import { useEffect, useState } from 'react';
-import type { Alert, Recipe } from '@/@types';
+import type { Recipe } from '@/@types';
 import Card from '@/components/Card/Card';
 import * as api from '@/services/api';
+import { useAlertStore } from '@/store/useAlertStore';
 
-type FavoritesPageProps = {
-  setAlert: React.Dispatch<React.SetStateAction<Alert | null>>;
-};
+export default function FavoritesPage() {
+  const setAlert = useAlertStore((state) => state.setAlert);
 
-export default function FavoritesPage({ setAlert }: FavoritesPageProps) {
   const [favorites, setFavorites] = useState<Recipe[]>([]);
 
   useEffect(() => {

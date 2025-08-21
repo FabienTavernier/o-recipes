@@ -5,9 +5,12 @@ type AlertState = {
   alert: Alert | null;
 }
 
-export const useAlertStore = create<AlertState>()(() => ({
-  alert: {
-    status: 'error',
-    message: 'Fausse alerte pour Zustand'
-  },
+type AlertActions = {
+  setAlert: (alert: Alert) => void;
+};
+
+export const useAlertStore = create<AlertState & AlertActions>()((set) => ({
+  alert: null,
+
+  setAlert: (alert) => set(() => ({ alert }))
 }));
