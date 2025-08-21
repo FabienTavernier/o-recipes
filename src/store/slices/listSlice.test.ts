@@ -75,4 +75,9 @@ describe('listSlice reducers', () => {
     // je veux que cet élément ait sa quantité doublée
     expect(updatedState.ingredients[0].quantity).toEqual(ingredientInList.quantity * 2);
   });
+
+  // TODO tester removeIngredient
+  // état actuel → avec 1 ingrédient = ingredientInList
+  // nom de l'ingrédient à supprimer = ingredientInList.name
+  // on s'attend à ce que l'état modifié ne comporte plus d'ingrédient → expect().toHaveLength(0) || expect().toEqual([])
 });
