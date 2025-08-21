@@ -22,6 +22,7 @@ export default function Header({
   const countIngredients = useListStore((state) => state.ingredients.length);
 
   const setAlert = useAlertStore((state) => state.setAlert);
+  const clearAlert = useAlertStore((state) => state.clearAlert);
 
   const navigate = useNavigate();
 
@@ -36,7 +37,7 @@ export default function Header({
         password: formData.get('password') as string,
       });
 
-      setAlert(null);
+      clearAlert();
       setIsLogged(true);
       api.addTokenToInstance(token);
       ls.saveToken(token);
