@@ -19,10 +19,9 @@ export const useRecipesStore = create<RecipesState & RecipesActions>()(
   devtools((set) => ({
     recipes: [],
     isLoading: false,
-    error: null,
 
     fetchRecipes: async () => {
-      set({ isLoading: true, error: null }, undefined, 'recipes/fetch.pending');
+      set({ isLoading: true }, undefined, 'recipes/fetch.pending');
       try {
         const data = await api.getRecipes();
         set({ recipes: data, isLoading: false }, undefined, 'recipes/fetch.fulfilled');
@@ -44,7 +43,7 @@ export const useRecipesStore = create<RecipesState & RecipesActions>()(
         // pour récupérer le state (`getState`)
         useAlertStore.getState().setAlert(error);
 
-        set({ error, isLoading: false }, undefined, 'recipes/fetch.rejected');
+        set({ isLoading: false }, undefined, 'recipes/fetch.rejected');
         console.error(err);
       }
     },
