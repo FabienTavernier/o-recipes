@@ -1,5 +1,6 @@
 import type { Alert } from "@/@types"
 import { create } from "zustand";
+import { devtools } from "zustand/middleware";
 
 type AlertState = {
   alert: Alert | null;
@@ -10,9 +11,22 @@ type AlertActions = {
   clearAlert: () => void;
 };
 
-export const useAlertStore = create<AlertState & AlertActions>()((set) => ({
-  alert: null,
+export const useAlertStore = create<AlertState & AlertActions>()(
+  devtools((set) => ({
+    alert: null,
 
-  setAlert: (alert) => set(() => ({ alert })),
-  clearAlert: () => set(() => ({ alert: null })),
-}));
+    setAlert: (alert) =>
+      set(
+        () => ({ alert }),
+        undefined,
+        'alert/set',
+      ),
+
+    clearAlert: () =>
+      set(
+        () => ({ alert: null }),
+        undefined,
+        'alert/clear',
+      ),
+  }))
+);
