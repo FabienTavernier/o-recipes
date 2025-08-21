@@ -6,10 +6,9 @@ import type { Alert } from '@/@types';
 
 type NotificationProps = {
   alert: Alert;
-  setAlert: React.Dispatch<React.SetStateAction<Alert | null>>;
 };
 
-export default function Notification({ alert, setAlert }: NotificationProps) {
+export default function Notification({ alert }: NotificationProps) {
   const [visible, setVisible] = useState(true);
 
   const { status, message } = alert;
@@ -17,11 +16,11 @@ export default function Notification({ alert, setAlert }: NotificationProps) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setVisible(false);
-      setAlert(null);
+      // setAlert(null);
     }, 5000);
 
     return () => clearTimeout(timer);
-  }, [setAlert]);
+  }, []);
 
   if (!visible) {
     return null;

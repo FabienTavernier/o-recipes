@@ -17,6 +17,7 @@ import Spinner from '../ui/Spinner/Spinner';
 import Header from './Header/Header';
 import List from './List/List';
 import SideBar from './Sidebar/Sidebar';
+import { useAlertStore } from '@/store/useAlertStore';
 
 export default function App() {
   const location = useLocation();
@@ -25,7 +26,8 @@ export default function App() {
   // const [isLoading, setIsLoading] = useState(true);
   const { recipes, isLoading, error, fetchRecipes } = useRecipesStore();
 
-  const [alert, setAlert] = useState<Alert | null>(error);
+  // const [alert, setAlert] = useState<Alert | null>(error);
+  const { alert } = useAlertStore();
 
   const [isLogged, setIsLogged] = useState(false);
 
@@ -56,7 +58,7 @@ export default function App() {
 
   return (
     <>
-      {alert && <Notification alert={alert} setAlert={setAlert} />}
+      {alert && <Notification alert={alert} />}
 
       <div className="app">
         <div className="app-content">
@@ -66,7 +68,6 @@ export default function App() {
             <Header
               isLogged={isLogged}
               setIsLogged={setIsLogged}
-              setAlert={setAlert}
             />
 
             <hr />
@@ -78,7 +79,7 @@ export default function App() {
               {isLogged && (
                 <Route
                   path="/favorites"
-                  element={<FavoritesPage setAlert={setAlert} />}
+                  element={<FavoritesPage />}
                 />
               )}
 
