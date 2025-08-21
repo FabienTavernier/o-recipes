@@ -1,6 +1,21 @@
 import { describe, expect, it } from 'vitest';
 
-import listReducer, { initialState } from './listSlice';
+import listReducer, { addIngredients, initialState } from './listSlice';
+import type { Ingredient } from '@/@types';
+
+// je crée une variable Ingredient pour mes différents tests
+const ingredientToAdd: Ingredient = {
+  id: 42,
+  name: 'framboise',
+  quantity: 50,
+  unit: 'g',
+};
+// je prend son pendant dans la liste
+const ingredientInList: Omit<Ingredient, 'id'> = {
+  name: ingredientToAdd.name,
+  quantity: ingredientToAdd.quantity,
+  unit: ingredientToAdd.unit,
+}
 
 describe('listSlice reducers', () => {
   /*
@@ -26,4 +41,23 @@ describe('listSlice reducers', () => {
     const expectedState = listReducer(undefined, { type: '@@TEST' });
     expect(expectedState).toEqual(initialState);
   });
+
+  /*
+    Je peux tester mes actions
+
+    Une action est « capturée » par le reducer qui doit retourner
+    un nouvel état modifié
+  */
+ it('should add ingredients to the list', () => {
+   // initialState: ingredients = []
+   // ingredientsToAdd = [Ingredient]
+   // updatedState: ingredients = [Omit<Ingredient, 'id'>]
+   const updatedState = listReducer(initialState, addIngredients([ingredientToAdd]));
+
+   // je veux avoir 1 élément dans ma liste
+   expect(updatedState.ingredients).toHaveLength(1);
+
+   // je veux que cet élément soit mon ingredient (sans l'ID)
+   expect(updatedState.ingredients[0]).toEqual(ingredientInList);
+ });
 });
