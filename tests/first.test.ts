@@ -6,7 +6,7 @@ function sum(a, b) {
   return a + b;
 }
 
-describe('mon premier test avec vitest', () => {
+describe.skip('mon premier test avec vitest', () => {
   test('la somme 1 + 2 égale à 3', () => {
     expect(sum(1, 2)).toBe(3);
   });

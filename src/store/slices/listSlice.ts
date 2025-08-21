@@ -10,7 +10,7 @@ type ListState = {
   ingredients: Omit<Ingredient, 'id'>[];
 };
 
-const initialState: ListState = {
+export const initialState: ListState = {
   isExpanded: false,
   ingredients: [],
 };
