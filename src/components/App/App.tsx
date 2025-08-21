@@ -24,7 +24,7 @@ export default function App() {
 
   // const [recipes, setRecipes] = useState<Recipe[]>([]);
   // const [isLoading, setIsLoading] = useState(true);
-  const { recipes, isLoading, error, fetchRecipes } = useRecipesStore();
+  const { recipes, isLoading, fetchRecipes } = useRecipesStore();
 
   // const [alert, setAlert] = useState<Alert | null>(error);
   const { alert } = useAlertStore();
