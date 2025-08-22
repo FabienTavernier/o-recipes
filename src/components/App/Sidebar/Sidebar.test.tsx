@@ -5,6 +5,7 @@ import '@testing-library/jest-dom';
 import SideBar from './Sidebar';
 import type { Recipe } from '@/@types';
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router';
 
 // je crée une recette pour mes tests
 const mockRecipe: Recipe = {
@@ -71,7 +72,15 @@ const mockRecipe: Recipe = {
 
 describe('Sidebar component', () => {
   it('should render homepage link and recipe link', () => {
-    render(<SideBar recipes={[mockRecipe]} isLogged={false} />);
+    // On doit envelopper notre composant dans BrowserRouter
+    // pour accéder aux outils de React Router utilisés
+    const component = (
+      <BrowserRouter>
+        <SideBar recipes={[mockRecipe]} isLogged={false} />
+      </BrowserRouter>
+    );
+
+    render(component);
 
     // Lien statique « Accueil »
     expect(screen.getByText('Accueil')).toBeInTheDocument();
