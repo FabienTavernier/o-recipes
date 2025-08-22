@@ -36,5 +36,8 @@ test('login', async ({ page }) => {
   await page.getByRole('button', { name: 'OK' }).click();
 
   // Chercher le texte « Bienvenue »
-  await expect(page.getByText('Bienvenue')).toBeVisible();
+  // await expect(page.getByText('Bienvenue')).toBeVisible();
+  // ou mieux (?)
+  const alertElement = page.locator('.alert', { hasText: 'Bienvenue' });
+  await expect(alertElement).toHaveClass(/alert--success/);
 });
