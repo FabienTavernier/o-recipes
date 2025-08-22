@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { test, expect } from '@playwright/test';
 
 test('has title', async ({ page }) => {
@@ -24,4 +25,16 @@ test('display the recipe page', async ({ page }) => {
   // vérifie le titre de la page
   const heading = page.getByRole('heading', { level: 1, name: 'Cookies au beurre de cacahuète' });
   await expect(heading).toBeVisible();
+});
+
+test('login', async ({ page }) => {
+  await page.goto('/');
+
+  // Remplir mon formulaire
+  await page.getByRole('textbox', { name: 'Adresse e-mail' }).fill(process.env.TEST_USER_MAIL || 'DEFINE IN .ENV');
+  await page.getByRole('textbox', { name: 'mot de passe' }).fill(process.env.TEST_USER_PWD || ''); // ATTENTION pas de mot de passe en clair sur GH !
+  await page.getByRole('button', { name: 'OK' }).click();
+
+  // Chercher le texte « Bienvenue »
+  await expect(page.getByText('Bienvenue')).toBeVisible();
 });
