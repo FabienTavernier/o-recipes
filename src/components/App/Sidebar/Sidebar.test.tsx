@@ -100,4 +100,18 @@ describe('Sidebar component', () => {
 
     expect(screen.getByText('Mes recettes préférées')).toBeInTheDocument();
   });
+
+  it('should render no recipe links when list is empty', () => {
+    const component = (
+      <BrowserRouter>
+        <SideBar recipes={[]} isLogged={true} />
+      </BrowserRouter>
+    );
+
+    render(component);
+
+    // je ne dois pas récupérer de liens avec un href qui contient `/recipe/`
+    // Si je m'attends à NE PAS trouver d'élément, j'utilise queryByRole
+    expect(screen.queryByRole('link', { name: /recipe/ })).toBeNull();
+  });
 });
