@@ -88,4 +88,16 @@ describe('Sidebar component', () => {
     // Lien dynamique pour chaque recette
     expect(screen.getByText(mockRecipe.title)).toBeInTheDocument();
   });
+
+  it('should render favorites link when logged in', () => {
+    const component = (
+      <BrowserRouter>
+        <SideBar recipes={[mockRecipe]} isLogged={true} />
+      </BrowserRouter>
+    );
+
+    render(component);
+
+    expect(screen.getByText('Mes recettes préférées')).toBeInTheDocument();
+  });
 });
