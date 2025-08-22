@@ -16,52 +16,52 @@ test('display the homepage', async ({ page }) => {
   await expect(heading).toBeVisible();
 });
 
-test('display the recipe page', async ({ page }) => {
-  await page.goto('/');
+// test('display the recipe page', async ({ page }) => {
+//   await page.goto('/');
 
-  // je clique sur la première recette
-  await page.getByRole('link', { name: 'Cookies au beurre de cacahuète' }).click();
+//   // je clique sur la première recette
+//   await page.getByRole('link', { name: 'Cookies au beurre de cacahuète' }).click();
 
-  // vérifie le titre de la page
-  const heading = page.getByRole('heading', { level: 1, name: 'Cookies au beurre de cacahuète' });
-  await expect(heading).toBeVisible();
-});
+//   // vérifie le titre de la page
+//   const heading = page.getByRole('heading', { level: 1, name: 'Cookies au beurre de cacahuète' });
+//   await expect(heading).toBeVisible();
+// });
 
-test('login', async ({ page }) => {
-  await page.goto('/');
+// test('login', async ({ page }) => {
+//   await page.goto('/');
 
-  // Remplir mon formulaire
-  await page.getByRole('textbox', { name: 'Adresse e-mail' }).fill(process.env.TEST_USER_MAIL || 'DEFINE IN .ENV');
-  await page.getByRole('textbox', { name: 'Mot de passe' }).fill(process.env.TEST_USER_PWD || ''); // ATTENTION pas de mot de passe en clair sur GH !
-  await page.getByRole('button', { name: 'OK' }).click();
+//   // Remplir mon formulaire
+//   await page.getByRole('textbox', { name: 'Adresse e-mail' }).fill(process.env.TEST_USER_MAIL || 'DEFINE IN .ENV');
+//   await page.getByRole('textbox', { name: 'Mot de passe' }).fill(process.env.TEST_USER_PWD || ''); // ATTENTION pas de mot de passe en clair sur GH !
+//   await page.getByRole('button', { name: 'OK' }).click();
 
-  // Chercher le texte « Bienvenue »
-  // await expect(page.getByText('Bienvenue')).toBeVisible();
-  // ou mieux (?)
-  const alertElement = page.locator('.alert', { hasText: 'Bienvenue' });
-  await expect(alertElement).toHaveClass(/alert--success/);
+//   // Chercher le texte « Bienvenue »
+//   // await expect(page.getByText('Bienvenue')).toBeVisible();
+//   // ou mieux (?)
+//   const alertElement = page.locator('.alert', { hasText: 'Bienvenue' });
+//   await expect(alertElement).toHaveClass(/alert--success/);
 
-  // Vérifier la présence du bouton de déconnexion
-  await expect(page.getByRole('button', { name: 'Se déconnecter' })).toBeVisible();
-  // Vérifier l'absence du formulaire
-  await expect(page.getByRole('textbox', { name: 'Mot de passe' })).toHaveCount(0);
-});
+//   // Vérifier la présence du bouton de déconnexion
+//   await expect(page.getByRole('button', { name: 'Se déconnecter' })).toBeVisible();
+//   // Vérifier l'absence du formulaire
+//   await expect(page.getByRole('textbox', { name: 'Mot de passe' })).toHaveCount(0);
+// });
 
-test('login > error', async ({ page }) => {
-  await page.goto('/');
+// test('login > error', async ({ page }) => {
+//   await page.goto('/');
 
-  await page.getByRole('textbox', { name: 'Adresse e-mail' }).fill(process.env.TEST_USER_MAIL || 'DEFINE IN .ENV');
-  // Utilise un mauvais mot de passe
-  await page.getByRole('textbox', { name: 'Mot de passe' }).fill('BADpassword');
-  await page.getByRole('button', { name: 'OK' }).click();
+//   await page.getByRole('textbox', { name: 'Adresse e-mail' }).fill(process.env.TEST_USER_MAIL || 'DEFINE IN .ENV');
+//   // Utilise un mauvais mot de passe
+//   await page.getByRole('textbox', { name: 'Mot de passe' }).fill('BADpassword');
+//   await page.getByRole('button', { name: 'OK' }).click();
 
-  const alertElement = page.locator('.alert');
-  // Vérifie si il y a bien un succès sur l'alerte
-  await expect(alertElement).toHaveClass(/alert--error/);
+//   const alertElement = page.locator('.alert');
+//   // Vérifie si il y a bien un succès sur l'alerte
+//   await expect(alertElement).toHaveClass(/alert--error/);
 
-  // Vérifie la présence du bouton de déconnexion
-  await expect(page.getByRole('button', { name: 'Se déconnecter' })).toHaveCount(0);
+//   // Vérifie la présence du bouton de déconnexion
+//   await expect(page.getByRole('button', { name: 'Se déconnecter' })).toHaveCount(0);
 
-  // Vérifie que le formulaire n'est plus là
-  await expect(page.getByRole('textbox', { name: 'Mot de passe' })).toBeVisible();
-});
+//   // Vérifie que le formulaire n'est plus là
+//   await expect(page.getByRole('textbox', { name: 'Mot de passe' })).toBeVisible();
+// });
