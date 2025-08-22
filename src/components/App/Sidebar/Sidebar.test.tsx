@@ -84,5 +84,8 @@ describe('Sidebar component', () => {
 
     // Lien statique « Accueil »
     expect(screen.getByText('Accueil')).toBeInTheDocument();
+
+    // Lien dynamique pour chaque recette
+    expect(screen.getByText(mockRecipe.title)).toBeInTheDocument();
   });
 });
