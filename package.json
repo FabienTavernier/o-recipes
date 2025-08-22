@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:e2e": "pnpm exec playwright test",
+    "test:e2e:ui": "pnpm exec playwright test --ui",
     "check": "pnpx @biomejs/biome check ./",
     "check:fix": "pnpx @biomejs/biome check --write ./"
   },
