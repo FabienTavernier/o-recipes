@@ -14,3 +14,14 @@ test('display the homepage', async ({ page }) => {
   const heading = page.getByRole('heading', { level: 1, name: 'Les recettes' });
   await expect(heading).toBeVisible();
 });
+
+test('display the recipe page', async ({ page }) => {
+  await page.goto('/');
+
+  // je clique sur la première recette
+  await page.getByRole('link', { name: 'Cookies au beurre de cacahuète' }).click();
+
+  // vérifie le titre de la page
+  const heading = page.getByRole('heading', { level: 1, name: 'Cookies au beurre de cacahuète' });
+  await expect(heading).toBeVisible();
+});
