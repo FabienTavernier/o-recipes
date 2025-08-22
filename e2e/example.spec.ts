@@ -32,7 +32,7 @@ test('login', async ({ page }) => {
 
   // Remplir mon formulaire
   await page.getByRole('textbox', { name: 'Adresse e-mail' }).fill(process.env.TEST_USER_MAIL || 'DEFINE IN .ENV');
-  await page.getByRole('textbox', { name: 'mot de passe' }).fill(process.env.TEST_USER_PWD || ''); // ATTENTION pas de mot de passe en clair sur GH !
+  await page.getByRole('textbox', { name: 'Mot de passe' }).fill(process.env.TEST_USER_PWD || ''); // ATTENTION pas de mot de passe en clair sur GH !
   await page.getByRole('button', { name: 'OK' }).click();
 
   // Chercher le texte « Bienvenue »
@@ -40,4 +40,28 @@ test('login', async ({ page }) => {
   // ou mieux (?)
   const alertElement = page.locator('.alert', { hasText: 'Bienvenue' });
   await expect(alertElement).toHaveClass(/alert--success/);
+
+  // Vérifier la présence du bouton de déconnexion
+  await expect(page.getByRole('button', { name: 'Se déconnecter' })).toBeVisible();
+  // Vérifier l'absence du formulaire
+  await expect(page.getByRole('textbox', { name: 'Mot de passe' })).toHaveCount(0);
+});
+
+test('login > error', async ({ page }) => {
+  await page.goto('/');
+
+  await page.getByRole('textbox', { name: 'Adresse e-mail' }).fill(process.env.TEST_USER_MAIL || 'DEFINE IN .ENV');
+  // Utilise un mauvais mot de passe
+  await page.getByRole('textbox', { name: 'Mot de passe' }).fill('BADpassword');
+  await page.getByRole('button', { name: 'OK' }).click();
+
+  const alertElement = page.locator('.alert');
+  // Vérifie si il y a bien un succès sur l'alerte
+  await expect(alertElement).toHaveClass(/alert--error/);
+
+  // Vérifie la présence du bouton de déconnexion
+  await expect(page.getByRole('button', { name: 'Se déconnecter' })).toHaveCount(0);
+
+  // Vérifie que le formulaire n'est plus là
+  await expect(page.getByRole('textbox', { name: 'Mot de passe' })).toBeVisible();
 });

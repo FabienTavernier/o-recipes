@@ -1,0 +1,33 @@
+import { test, expect } from '@playwright/test';
+
+test('test', async ({ page }) => {
+  await page.goto('http://localhost:5173/');
+  await expect(page.getByRole('heading', { name: 'Les recettes' })).toBeVisible();
+  await page.getByRole('article').filter({ hasText: 'Cookies au beurre de cacahuè' }).getByRole('link').click();
+  await expect(page.locator('h1')).toContainText('Cookies au beurre de cacahuète');
+  await page.getByRole('button', { name: 'Afficher la liste des ingré' }).click();
+  await expect(page.getByRole('heading', { name: 'Votre liste' })).toBeVisible();
+  await page.getByRole('button', { name: 'Ajouter les ingrédients à la' }).click();
+  await expect(page.locator('section')).toContainText('sucre roux');
+  await expect(page.getByRole('article').filter({ hasText: 'sucre roux gX' }).getByRole('spinbutton')).toHaveValue('120');
+  await page.getByRole('button', { name: 'Ajouter les ingrédients à la' }).click();
+  await expect(page.getByRole('article').filter({ hasText: 'sucre roux gX' }).getByRole('spinbutton')).toHaveValue('240');
+  await page.getByRole('article').filter({ hasText: 'sucre roux gX' }).getByRole('spinbutton').click();
+  await page.getByRole('article').filter({ hasText: 'sucre roux gX' }).getByRole('spinbutton').fill('');
+  await page.getByRole('article').filter({ hasText: 'beurre de cacahuètes crunchy' }).getByRole('spinbutton').click();
+  await page.getByRole('article').filter({ hasText: 'beurre de cacahuètes crunchy' }).getByRole('spinbutton').press('Shift+ArrowLeft');
+  await page.getByRole('article').filter({ hasText: 'beurre de cacahuètes crunchy' }).getByRole('spinbutton').press('Shift+ArrowLeft');
+  await page.getByRole('article').filter({ hasText: 'beurre de cacahuètes crunchy' }).getByRole('spinbutton').press('Shift+ArrowLeft');
+  await page.getByRole('article').filter({ hasText: 'beurre de cacahuètes crunchy' }).getByRole('spinbutton').fill('100');
+  await page.getByRole('article').filter({ hasText: 'beurre de cacahuètes crunchy' }).getByRole('spinbutton').press('Tab');
+  await expect(page.getByRole('article').filter({ hasText: 'beurre de cacahuètes crunchy' }).getByRole('spinbutton')).toHaveValue('100');
+  await page.getByRole('link', { name: 'Amandier' }).click();
+  await expect(page.locator('h1')).toContainText('Amandier');
+  await page.getByRole('button', { name: 'Ajouter les ingrédients à la' }).click();
+  await page.getByRole('button', { name: 'Ajouter les ingrédients à la' }).press('ArrowDown');
+  await page.getByRole('button', { name: 'Ajouter les ingrédients à la' }).press('ArrowDown');
+  await page.getByRole('button', { name: 'Ajouter les ingrédients à la' }).press('ArrowDown');
+  await expect(page.getByText('sucre gX')).toBeVisible();
+  await page.getByRole('article').filter({ hasText: 'bicarbonate ccX' }).getByRole('button').click();
+  await page.getByRole('button', { name: 'Vider' }).dblclick();
+});
